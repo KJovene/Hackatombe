@@ -1,20 +1,17 @@
-import { useEffect } from 'react';
+import FeedPage from "./pages/FeedPage"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+
 
 
 function App() {
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const articles = await fetchJavascript();
-      console.log(articles);
-    };
-    fetchData();
-  }, []);
   return (
-    <div>
-      <h1>Welcome to the RSS Feed App</h1>
-      <p>Check the console for fetched articles.</p>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<FeedPage />} />
+        <Route path="/feed" element={<FeedPage />} />
+      </Routes>
+    </Router>
   )
 }
 
