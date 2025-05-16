@@ -1,9 +1,19 @@
-var express = require('express');
-var router = express.Router();
+// import express from 'express';
+// import dbConnect from '../DB/dbconnect.js';
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// const router = express.Router();
 
-module.exports = router;
+// router.post('/hello', async (req, res) => {
+//   const message = req.body.message;
+//   try {
+//     const [result] = await dbConnect.query(
+//       'INSERT INTO hellos (message) VALUES (?)',
+//       [message]
+//     );
+//     res.json({ success: true, id: result.insertId });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+// export default router;
