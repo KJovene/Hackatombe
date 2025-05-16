@@ -1,20 +1,19 @@
-import { useEffect } from 'react';
-
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Register from './pages/Register';
+import Login from './pages/Login';
 
 function App() {
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const articles = await fetchJavascript();
-      console.log(articles);
-    };
-    fetchData();
-  }, []);
   return (
-    <div>
-      <h1>Welcome to the RSS Feed App</h1>
-      <p>Check the console for fetched articles.</p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
