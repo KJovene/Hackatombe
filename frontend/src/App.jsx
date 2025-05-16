@@ -1,16 +1,19 @@
-function App() {
-  const sendHello = async () => {
-    await fetch('http://localhost:6782/hello', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: 'Hello world' })
-    });
-    alert('Message envoyé !');
-  };
+import { useEffect } from 'react';
 
+
+function App() {
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const articles = await fetchJavascript();
+      console.log(articles);
+    };
+    fetchData();
+  }, []);
   return (
     <div>
-      <button onClick={sendHello}>Envoyer Hello world à la DB</button>
+      <h1>Welcome to the RSS Feed App</h1>
+      <p>Check the console for fetched articles.</p>
     </div>
   )
 }
