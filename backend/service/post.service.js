@@ -22,3 +22,13 @@ export const addPost = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur lors de la création du post" });
   }
 }
+
+export const getPosts = async (req, res) => {
+  try {
+    const [rows] = await pool.query("SELECT * FROM posts");
+    res.status(200).json(rows);
+  } catch (err) {
+    console.error('Erreur /posts:', err);
+    res.status(500).json({ message: "Erreur serveur lors de la récupération des posts" });
+  }
+}

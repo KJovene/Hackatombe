@@ -60,7 +60,7 @@ function AddPost() {
         ...values,
         user_id
       })
-      navigate('/')
+      navigate('/feed')
     } catch (err) {
       if (err.response && err.response.data && err.response.data.message) {
         setErrors({ submit: err.response.data.message })
@@ -81,7 +81,7 @@ function AddPost() {
             type="text"
             id="titre"
             name="titre"
-            className="w-full px-3 py-2 border"
+            className="w-full px-3 py-2 border text-gray-700"
             value={values.titre}
             onChange={handleChange}
             required
@@ -93,7 +93,7 @@ function AddPost() {
           <textarea
             id="description"
             name="description"
-            className="w-full px-3 py-2 border"
+            className="w-full px-3 py-2 border text-gray-700"
             value={values.description}
             onChange={handleChange}
           />

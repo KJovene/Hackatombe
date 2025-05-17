@@ -8,6 +8,8 @@ import {
 } from "../utils/fetchapis";
 import { Search, Grid, List } from "lucide-react";
 import Header from "../components/ui/Header";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 function FeedTest() {
   const [allArticles, setAllArticles] = useState([]);
@@ -15,6 +17,35 @@ function FeedTest() {
   const [viewMode, setViewMode] = useState("grid");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState(null);
+  const [createdPosts, setCreatedPosts] = useState([]);
+
+  useEffect(() => {
+    if (selectedType === "created-posts") {
+      setLoading(true);
+      axios.get('http://localhost:6782/posts')
+        .then((res) => {
+          setCreatedPosts(
+            res.data.map((p) => {
+              let thumbnail = p.image;
+              if (thumbnail && !thumbnail.startsWith("data:image")) {
+                thumbnail = `data:image/jpeg;base64,${thumbnail}`;
+              }
+              return {
+                ...p,
+                id: p.id,
+                title: p.titre,
+                description: p.description || "",
+                thumbnail: thumbnail || "https://via.placeholder.com/300x200?text=Post",
+                type: "created-posts",
+                tags: ["created"],
+              };
+            })
+          );
+        })
+        .catch(() => setCreatedPosts([]))
+        .finally(() => setLoading(false));
+    }
+  }, [selectedType]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,12 +97,19 @@ function FeedTest() {
     fetchData();
   }, []);
 
-  const filteredArticles = allArticles.filter(
-    (article) =>
-      (!selectedType || article.type === selectedType) &&
-      (article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.description.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  const filteredArticles =
+    selectedType === "created-posts"
+      ? createdPosts.filter(
+        (article) =>
+          article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          article.description.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      : allArticles.filter(
+        (article) =>
+          (!selectedType || article.type === selectedType) &&
+          (article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            article.description.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
@@ -79,7 +117,7 @@ function FeedTest() {
       <div className="border-b border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between mb-4">
-            <div className="flex-1 max-w-2xl">
+            <div className="flex max-w-2xl">
               <div className="relative">
                 <Search
                   className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -93,25 +131,26 @@ function FeedTest() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
+              <Link to="/addPost">
+                <button className="ml-4 px-4 py-2 bg-purple-500 text-white rounded-lg"> Ajouter un post</button>
+              </Link>
             </div>
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => setViewMode("grid")}
-                className={`p-2 rounded-lg transition-colors ${
-                  viewMode === "grid"
+                className={`p-2 rounded-lg transition-colors ${viewMode === "grid"
                     ? "bg-gray-100 dark:bg-gray-800 text-purple-500"
                     : "text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                }`}
+                  }`}
               >
                 <Grid size={20} />
               </button>
               <button
                 onClick={() => setViewMode("list")}
-                className={`p-2 rounded-lg transition-colors ${
-                  viewMode === "list"
+                className={`p-2 rounded-lg transition-colors ${viewMode === "list"
                     ? "bg-gray-100 dark:bg-gray-800 text-purple-500"
                     : "text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                }`}
+                  }`}
               >
                 <List size={20} />
               </button>
@@ -121,63 +160,66 @@ function FeedTest() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSelectedType(null)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                !selectedType
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${!selectedType
                   ? "bg-purple-500 text-white"
                   : "text-gray-400 hover:text-white"
-              }`}
+                }`}
             >
               Tout
             </button>
             <button
               onClick={() => setSelectedType("javascript")}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                selectedType === "javascript"
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedType === "javascript"
                   ? "bg-purple-500 text-white"
                   : "text-gray-400 hover:text-white"
-              }`}
+                }`}
             >
               Javascript
             </button>
             <button
               onClick={() => setSelectedType("machine-learning")}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                selectedType === "machine-learning"
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedType === "machine-learning"
                   ? "bg-purple-500 text-white"
                   : "text-gray-400 hover:text-white"
-              }`}
+                }`}
             >
               Machine Learning
             </button>
             <button
               onClick={() => setSelectedType("ui-design")}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                selectedType === "ui-design"
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedType === "ui-design"
                   ? "bg-purple-500 text-white"
                   : "text-gray-400 hover:text-white"
-              }`}
+                }`}
             >
               UI Design
             </button>
             <button
               onClick={() => setSelectedType("cyber-security")}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                selectedType === "cyber-security"
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedType === "cyber-security"
                   ? "bg-purple-500 text-white"
                   : "text-gray-400 hover:text-white"
-              }`}
+                }`}
             >
               Cyber Security
             </button>
             <button
               onClick={() => setSelectedType("data-science")}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                selectedType === "data-science"
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedType === "data-science"
                   ? "bg-purple-500 text-white"
                   : "text-gray-400 hover:text-white"
-              }`}
+                }`}
             >
               Data Science
+            </button>
+            <button
+              onClick={() => setSelectedType("created-posts")}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedType === "data-science"
+                  ? "bg-purple-500 text-white"
+                  : "text-gray-400 hover:text-white"
+                }`}
+            >
+              Posts créés
             </button>
           </div>
         </div>
@@ -187,18 +229,16 @@ function FeedTest() {
           <p>Chargement des articles...</p>
         ) : (
           <div
-            className={`grid ${
-              viewMode === "grid"
+            className={`grid ${viewMode === "grid"
                 ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
                 : "grid-cols-1"
-            } gap-6`}
+              } gap-6`}
           >
             {filteredArticles.map((article) => (
               <article
                 key={article.id}
-                className={`bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden transition-transform hover:-translate-y-1 ${
-                  viewMode === "list" ? "flex" : ""
-                }`}
+                className={`bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden transition-transform hover:-translate-y-1 ${viewMode === "list" ? "flex" : ""
+                  }`}
               >
                 <a
                   href={article.url}
@@ -207,9 +247,8 @@ function FeedTest() {
                   className="flex flex-1"
                 >
                   <div
-                    className={`relative ${
-                      viewMode === "list" ? "w-48" : "w-full"
-                    }`}
+                    className={`relative ${viewMode === "list" ? "w-48" : "w-full"
+                      }`}
                   >
                     <img
                       src={article.thumbnail}
