@@ -1,5 +1,4 @@
 import express from 'express';
-import dbConnect from '../DB/dbconnect.js';
 import { addPost } from '../service/post.service.js';
 import { register, login, user, verifyToken } from '../service/login.service.js';
 
