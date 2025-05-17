@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
 import axios from 'axios'
@@ -37,11 +36,11 @@ function Login() {
           setErrors({ ...errors, email: "L'utilisateur n'existe pas" })
         } else if (err.response.status === 500) {
           setErrors({ ...errors, email: "Erreur serveur" })
+          console.log('Erreur /auth/login', err)
         }
       } else {
         setErrors({ ...errors, email: "Erreur réseau ou serveur injoignable" })
-      }
-      console.log(err)
+      }    
     }
   }
 

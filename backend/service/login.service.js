@@ -2,6 +2,7 @@ import express from 'express';
 import pool from '../DB/dbconnect.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import ENV from '../config/env.js';
 
 export const register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -36,10 +37,10 @@ export const login = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: "Mot de passe incorrect" });
     }
-    if (!process.env.JWT_KEY) {
+    if (!ENV.JWT_KEY) {
       return res.status(500).json({ message: "Clé JWT manquante" });
     }
-    const token = jwt.sign({ id: rows[0].id }, process.env.JWT_KEY, { expiresIn: '3h' });
+    const token = jwt.sign({ id: rows[0].id }, ENV.JWT_KEY, { expiresIn: '3h' });
 
     return res.status(201).json({ token: token });
   } catch (err) {

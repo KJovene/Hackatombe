@@ -15,6 +15,7 @@ function FeedPage() {
   const [CyberSecurityArticles, setCyberSecurityArticles] = useState([]);
   const [DataScienceArticles, setDataScienceArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+  console.log('je suis la');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,6 +32,7 @@ function FeedPage() {
         setCyberSecurityArticles(CyberSecurityArticles);
         const DataScienceArticles = await fetchDataScience();
         setDataScienceArticles(DataScienceArticles);
+        console.log(DataScienceArticles);
       } catch (error) {
         console.error("Error fetching articles:", error);
       } finally {

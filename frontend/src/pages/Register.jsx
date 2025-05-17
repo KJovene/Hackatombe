@@ -26,7 +26,7 @@ function Register() {
     setErrors(validationErrors)
     try {
       const response = await axios.post('http://localhost:6782/auth/register', values)
-      if(response.status === 200) {
+      if(response.status === 200 || response.status === 201) {
         navigate('/login')
       }
     } catch (err) {
