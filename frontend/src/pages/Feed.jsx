@@ -5,21 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 import CommentModal from '../components/CommentModal';
 import Header from '../components/ui/Header';
 
-interface Resource {
-  id: string;
-  type: 'video' | 'podcast' | 'article';
-  title: string;
-  description: string;
-  author: string;
-  thumbnail: string;
-  likes: number;
-  comments: number;
-  tags: string[];
-  level: 'débutant' | 'intermédiaire' | 'expert';
-  isLiked?: boolean;
-}
-
-const mockResources: Resource[] = [
+const mockResources = [
   {
     id: '1',
     type: 'video',
@@ -48,7 +34,7 @@ const mockResources: Resource[] = [
     id: '3',
     type: 'article',
     title: 'React 19 - Les nouvelles fonctionnalités',
-    description: 'Exploration des nouvelles fonctionnalités de React 19 et leur impact sur le développement d\'applications modernes',
+    description: "Exploration des nouvelles fonctionnalités de React 19 et leur impact sur le développement d'applications modernes",
     author: 'React Masters',
     thumbnail: 'https://images.pexels.com/photos/11035471/pexels-photo-11035471.jpeg',
     likes: 156,
@@ -60,7 +46,7 @@ const mockResources: Resource[] = [
     id: '4',
     type: 'podcast',
     title: 'UX Research en 2025 - Nouvelles méthodologies',
-    description: 'Discussion sur l\'évolution des méthodes de recherche UX et leur application dans les projets modernes',
+    description: "Discussion sur l'évolution des méthodes de recherche UX et leur application dans les projets modernes",
     author: 'UX Insights',
     thumbnail: 'https://images.pexels.com/photos/7014766/pexels-photo-7014766.jpeg',
     likes: 89,
@@ -71,8 +57,8 @@ const mockResources: Resource[] = [
   {
     id: '5',
     type: 'article',
-    title: 'Performance JavaScript - Guide d\'optimisation',
-    description: 'Techniques avancées pour optimiser les performances de vos applications JavaScript. Mesures, debugging et solutions concrètes.',
+    title: "Performance JavaScript - Guide d'optimisation",
+    description: "Techniques avancées pour optimiser les performances de vos applications JavaScript. Mesures, debugging et solutions concrètes.",
     author: 'JS Performance',
     thumbnail: 'https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg',
     likes: 112,
@@ -82,27 +68,27 @@ const mockResources: Resource[] = [
   }
 ];
 
-const Feed: React.FC = () => {
+const Feed = () => {
   const navigate = useNavigate();
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [viewMode, setViewMode] = useState('grid');
   const [searchQuery, setSearchQuery] = useState('');
   const [resources, setResources] = useState(mockResources);
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
-  const [selectedResourceId, setSelectedResourceId] = useState<string | null>(null);
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [selectedResourceId, setSelectedResourceId] = useState(null);
+  const [selectedType, setSelectedType] = useState(null);
 
-  const filteredResources = resources.filter(resource => 
+  const filteredResources = resources.filter(resource =>
     (!selectedType || resource.type === selectedType) &&
     (resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-     resource.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-     resource.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())))
+      resource.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      resource.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())))
   );
 
-  const handleShare = (id: string) => {
+  const handleShare = (id) => {
     console.log('Sharing resource:', id);
   };
 
-  const handleLike = (id: string) => {
+  const handleLike = (id) => {
     setResources(resources.map(resource => {
       if (resource.id === id) {
         const isLiked = !resource.isLiked;
@@ -116,12 +102,12 @@ const Feed: React.FC = () => {
     }));
   };
 
-  const handleComment = (id: string) => {
+  const handleComment = (id) => {
     setSelectedResourceId(id);
     setIsCommentModalOpen(true);
   };
 
-  const handleCommentSubmit = (comment: string) => {
+  const handleCommentSubmit = (comment) => {
     if (selectedResourceId) {
       setResources(resources.map(resource => {
         if (resource.id === selectedResourceId) {
@@ -135,14 +121,14 @@ const Feed: React.FC = () => {
     }
   };
 
-  const handleResourceClick = (id: string) => {
+  const handleResourceClick = (id) => {
     navigate(`/article/${id}`);
   };
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
       <Header />
-      
+
       {/* Sub-header with search and controls */}
       <div className="border-b border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 py-4">
