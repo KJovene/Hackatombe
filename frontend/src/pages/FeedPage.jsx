@@ -28,6 +28,8 @@ function FeedPage() {
         setUIDesignArticles(UIDesignArticles);
         const CyberSecurityArticles = await fetchCyberSecurity();
         setCyberSecurityArticles(CyberSecurityArticles);
+        const DataScienceArticles = await fetchDataScience();
+        setDataScienceArticles(DataScienceArticles);
       } catch (error) {
         console.error("Error fetching articles:", error);
       } finally {
