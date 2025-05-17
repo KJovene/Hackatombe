@@ -48,6 +48,28 @@ export const login = async (req, res) => {
   }
 };
 
+export const verifyToken = (req, res, next) => {
+  try {
+    const authHeader = req.headers['authorization'];
+    if (!authHeader) {
+      return res.status(403).json({ message: "Token manquant" });
+    }
+    const token = authHeader.split(' ')[1];
+    if (!token) {
+      return res.status(403).json({ message: "Token manquant" });
+    }
+    if (!process.env.JWT_KEY) {
+      return res.status(500).json({ message: "Clé JWT manquante" });
+    }
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
+    req.userId = decoded.id;
+    next();
+  } catch (error) {
+    console.error('Erreur verifyToken:', error);
+    return res.status(401).json({ message: "Token invalide" });
+  }
+};
+
 export const user = async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT id, username, email FROM user WHERE id = ?', [req.userId]);
