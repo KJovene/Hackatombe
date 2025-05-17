@@ -51,12 +51,12 @@ function Login() {
         <form onSubmit={handleSubmit}>
           <div className='mb-4'>
             <label htmlFor="email" className='block text-gray-700'>Email</label>
-            <input type="email" id="email" name="email" placeholder='Email' className='w-full px-3 py-2 border' onChange={handleChanges} required />
+            <input type="email" id="email" name="email" placeholder='Email' className='w-full px-3 py-2 border text-gray-700' onChange={handleChanges} required />
             {errors.email && <p className='text-red-500'>{errors.email}</p>}
           </div>
           <div className='mb-4'>
             <label htmlFor="password" className='block text-gray-700'>Mot de passe</label>
-            <input type="password" id="password" name="password" placeholder='Mot de passe' className='w-full px-3 py-2 border' onChange={handleChanges} required />
+            <input type="password" id="password" name="password" placeholder='Mot de passe' className='w-full px-3 py-2 border text-gray-700' onChange={handleChanges} required />
             {errors.password && <p className='text-red-500'>{errors.password}</p>}
           </div>
           <button type='submit' className='w-full bg-green-600 text-white py-2'>Valider</button>
