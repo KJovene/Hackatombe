@@ -52,6 +52,19 @@ export async function fetchUIDesign() {
     return articles;
 };
 
+export async function fetchDataScience() {
+        const res = await fetch('https://rss.app/feeds/v1.1/t12yNZlIHJx6bScr.json');
+        const data = await res.json();
+        const articles = data.items.map((item) => ({
+            title: item.title,
+            content_text: item.content_text,
+            url: item.url,
+            date_published: item.date_published,
+            image: item.image,
+        }));
+    return articles;
+};
+
 
 
 
