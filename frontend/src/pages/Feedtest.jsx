@@ -195,44 +195,32 @@ function FeedTest() {
           >
             {filteredArticles.map((article) => (
               <article
-                key={article.id}
-                className={`bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden transition-transform hover:-translate-y-1 ${
-                  viewMode === "list" ? "flex" : ""
-                }`}
+                key={article.id} 
+                className={`bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden transition-transform hover:-translate-y-1 flex flex-col items-center`}
               >
                 <a
                   href={article.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-1"
+                  className="flex flex-col items-center w-full h-full"
                 >
-                  <div
-                    className={`relative ${
-                      viewMode === "list" ? "w-48" : "w-full"
-                    }`}
-                  >
+                  <div className="relative w-full flex justify-center">
                     <img
                       src={article.thumbnail}
                       alt={article.title}
-                      className="w-full h-48 object-cover"
+                      className="w-full max-w-xs h-48 object-cover object-center rounded-t-lg"
                     />
                     <span className="absolute top-2 right-2 px-2 py-1 bg-gray-900/80 rounded-full text-xs font-medium text-white">
                       {article.type}
                     </span>
                   </div>
-                  <div className="p-4 flex-1 flex flex-col">
-                    <div className="flex items-start justify-between">
-                      <h2 className="text-lg font-semibold mb-2">
-                        {article.title}
-                      </h2>
-                      <span className="px-2 py-1 rounded text-xs font-medium bg-green-500/20 text-green-400">
-                        {article.level}
-                      </span>
-                    </div>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                      {article.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="p-4 flex flex-col items-center text-center w-full">
+                    <h2 className="text-lg font-semibold mb-2">{article.title}</h2>
+                    <span className="px-2 py-1 rounded text-xs font-medium bg-green-500/20 text-green-400 mb-2">
+                      {article.level}
+                    </span>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">{article.description}</p>
+                    <div className="flex flex-wrap gap-2 justify-center mb-4">
                       {article.tags &&
                         article.tags.map((tag) => (
                           <span
@@ -243,9 +231,7 @@ function FeedTest() {
                           </span>
                         ))}
                     </div>
-                    <span className="text-sm text-gray-600 dark:text-gray-400 mt-auto">
-                      {article.author}
-                    </span>
+                    <span className="text-sm text-gray-600 dark:text-gray-400">{article.author}</span>
                   </div>
                 </a>
               </article>
