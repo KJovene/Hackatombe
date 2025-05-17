@@ -27,10 +27,10 @@ const Header = () => {
               </button>
             )}
             <button
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/feed')}
               className="text-2xl font-bold bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent hover:opacity-80 transition-opacity"
             >
-              HACKATHON
+              HACKATOMBE 
             </button>
           </div>
           <button
