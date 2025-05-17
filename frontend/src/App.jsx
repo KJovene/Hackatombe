@@ -6,6 +6,7 @@ import FeedTest from "./pages/Feedtest";
 import ProtectedRoutes from "./components/ProtectedRoutes"
 import Register from './pages/Register';
 import Login from './pages/Login';
+import AddPost from './pages/AddPost';
 
 function App() {
   return (
@@ -14,8 +15,12 @@ function App() {
       <div className="min-h-screen bg-white dark:bg-gray-900">
         <Routes>
           <Route element={<ProtectedRoutes />}>
+
+            <Route path="/" element={<Onboarding />} />
+
             <Route path="/feed" element={<FeedTest />} />
             <Route path="/article/:id" element={<Article />} />
+            <Route path="/addPost" element={<AddPost />} />
           </Route>
           <Route path="/filters" element={<Onboarding />} />
           <Route path="/register" element={<Register />} />
