@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Validation from '../assets/RegisterValidation.jsx'
 
+
 function Register() {
   const [values, setValues] = useState({
     username: '',

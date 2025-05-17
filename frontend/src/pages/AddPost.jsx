@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { jwtDecode } from 'jwt-decode'
 
 function AddPost() {
   const [values, setValues] = useState({
@@ -12,8 +13,8 @@ function AddPost() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const userId = localStorage.getItem('userId')
-    if (!userId) {
+    const token = localStorage.getItem('token')
+    if (!token) {
       navigate('/login')
     }
   }, [navigate])
@@ -43,14 +44,29 @@ function AddPost() {
     setErrors(validationErrors)
     if (Object.keys(validationErrors).length > 0) return
     try {
-      const userId = localStorage.getItem('userId')
+      const token = localStorage.getItem('token')
+      if (!token) {
+        setErrors({ submit: "Utilisateur non connecté" })
+        return
+      }
+      const decoded = jwtDecode(token)
+      const user_id = decoded.id || decoded.user_id // adapte selon ton token
+      if (!user_id) {
+        setErrors({ submit: "Impossible de récupérer l'id utilisateur" })
+        return
+      }
+      console.log('user_id envoyé:', user_id)
       await axios.post('http://localhost:6782/posts', {
         ...values,
-        userId
+        user_id
       })
       navigate('/')
     } catch (err) {
-      setErrors({ submit: "Erreur lors de la création du post" })
+      if (err.response && err.response.data && err.response.data.message) {
+        setErrors({ submit: err.response.data.message })
+      } else {
+        setErrors({ submit: "Erreur lors de la création du post" })
+      }
       console.error(err)
     }
   }
@@ -81,7 +97,6 @@ function AddPost() {
             value={values.description}
             onChange={handleChange}
           />
-          {errors.description && <p className="text-red-500">{errors.description}</p>}
         </div>
         <div className="mb-4">
           <label htmlFor="image" className="block text-gray-700">Image</label>
@@ -96,7 +111,6 @@ function AddPost() {
           {values.image && (
             <img src={values.image} alt="Aperçu" className="mt-2 max-h-32" />
           )}
-          {errors.image && <p className="text-red-500">{errors.image}</p>}
         </div>
         <button type="submit" className="w-full bg-green-600 text-white py-2">Publier</button>
         {errors.submit && <p className="text-red-500 mt-2">{errors.submit}</p>}
