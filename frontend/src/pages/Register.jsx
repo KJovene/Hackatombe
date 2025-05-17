@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Validation from '../assets/RegisterValidation.jsx'
 
+
 function Register() {
   const [values, setValues] = useState({
     username: '',
@@ -25,7 +26,7 @@ function Register() {
     setErrors(validationErrors)
     try {
       const response = await axios.post('http://localhost:6782/auth/register', values)
-      if(response.status === 201) {
+      if(response.status === 200) {
         navigate('/login')
       }
     } catch (err) {

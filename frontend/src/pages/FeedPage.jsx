@@ -6,6 +6,7 @@ import {
   fetchUIDesign,
   fetchDataScience,
 } from "../utils/fetchapis";
+import { Link } from "react-router-dom";
 
 function FeedPage() {
   const [JsArticles, setJsArticles] = useState([]);
@@ -39,6 +40,9 @@ function FeedPage() {
   }, []);
   return (
     <div>
+      <Link to="/addPost">
+        <button className="bg-blue-500 text-white px-4 py-2 rounded">AddPost pages</button>
+      </Link>
       <h1>Voici les articles classés par thème</h1>
       <h2>Javascript</h2>
       <ul>
