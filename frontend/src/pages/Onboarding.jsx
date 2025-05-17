@@ -1,12 +1,10 @@
-import React from 'react';
-import { OnboardingProvider } from '../context/OnboardingContext';
+import { OnboardingProvider, useOnboarding } from '../context/OnboardingContext';
 import Header from '../components/ui/Header';
 import TagSelectionPage from '../components/onboarding/TagSelectionPage';
 import ContentTypeSelectionPage from '../components/onboarding/ContentTypeSelectionPage';
 import SuccessPage from '../components/onboarding/SuccessPage';
-import { useOnboarding } from '../context/OnboardingContext';
 
-const OnboardingSteps: React.FC = () => {
+const OnboardingSteps = () => {
   const { state } = useOnboarding();
   const { currentStep } = state;
 
@@ -19,7 +17,7 @@ const OnboardingSteps: React.FC = () => {
   );
 };
 
-const Onboarding: React.FC = () => {
+const Onboarding = () => {
   return (
     <OnboardingProvider>
       <div className="min-h-screen bg-white dark:bg-gray-900">
