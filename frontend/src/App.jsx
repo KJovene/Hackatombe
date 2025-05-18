@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import Onboarding from './pages/Onboarding';
-import Article from './pages/Course';
 import FeedTest from "./pages/Feedtest";
 import ProtectedRoutes from "./components/ProtectedRoutes"
 import Register from './pages/Register';
@@ -14,14 +13,11 @@ function App() {
     <Router>
       <div className="min-h-screen bg-white dark:bg-gray-900">
         <Routes>
-          <Route element={<ProtectedRoutes />}>
-
+          {/* <Route element={<ProtectedRoutes />}> */}
             <Route path="/" element={<Onboarding />} />
-
             <Route path="/feed" element={<FeedTest />} />
-            <Route path="/article/:id" element={<Article />} />
             <Route path="/addPost" element={<AddPost />} />
-          </Route>
+          {/* </Route> */}
           <Route path="/filters" element={<Onboarding />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
