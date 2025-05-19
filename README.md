@@ -7,7 +7,6 @@ Hackatombe est un outil collaboratif de veille technologique, permettant à la c
 - **Feed personnalisé** selon vos centres d'intérêt (tags, types de contenus)
 - **Ajout et partage de ressources** (articles, vidéos, podcasts, outils, etc.)
 - **Recherche et filtres avancés** par thème, format et popularité
-- **Commentaires et likes** sur chaque ressource
 - **Authentification sécurisée** (JWT)
 
 ## Stack technique
