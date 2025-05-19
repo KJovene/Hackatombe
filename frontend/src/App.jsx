@@ -13,11 +13,11 @@ function App() {
     <Router>
       <div className="min-h-screen bg-white dark:bg-gray-900">
         <Routes>
-          {/* <Route element={<ProtectedRoutes />}> */}
+          <Route element={<ProtectedRoutes />}>
             <Route path="/" element={<Onboarding />} />
             <Route path="/feed" element={<FeedTest />} />
             <Route path="/addPost" element={<AddPost />} />
-          {/* </Route> */}
+          </Route>
           <Route path="/filters" element={<Onboarding />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

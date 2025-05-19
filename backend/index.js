@@ -13,7 +13,5 @@ app.use(express.json({ limit : '100000mb'}));
 
 app.use(router);
 
-app.listen(6782, () => {
-    console.log("Server is running on port 6782");
-    }
-);
+
+export default app;

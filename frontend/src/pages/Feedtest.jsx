@@ -26,18 +26,37 @@ function FeedTest() {
         .then((res) => {
           setCreatedPosts(
             res.data.map((p) => {
-              let thumbnail = p.image;
-              if (thumbnail && !thumbnail.startsWith("data:image")) {
-                thumbnail = `data:image/jpeg;base64,${thumbnail}`;
+              let thumbnail = "";
+              if (
+                p.image &&
+                typeof p.image === "string" &&
+                p.image.length > 100
+              ) {
+                thumbnail = p.image.startsWith("data:image")
+                  ? p.image
+                  : `data:image/jpeg;base64,${p.image}`;
+              }
+              if (
+                !thumbnail ||
+                thumbnail === "data:image/jpeg;base64," ||
+                thumbnail.length < 100
+              ) {
+                thumbnail = "https://placehold.co/300x200?text=Post";
               }
               return {
                 ...p,
                 id: p.id,
-                title: p.titre,
+                title: p.titre || "",
                 description: p.description || "",
-                thumbnail: thumbnail || "https://via.placeholder.com/300x200?text=Post",
+                thumbnail,
                 type: "created-posts",
                 tags: ["created"],
+                level: p.level || "débutant",
+                author: p.author || "Inconnu",
+                url: p.url || "#",
+                date: p.date || new Date().toISOString(),
+                likes: Math.floor(Math.random() * 100),
+                comments: Math.floor(Math.random() * 20),
               };
             })
           );
@@ -139,8 +158,8 @@ function FeedTest() {
               <button
                 onClick={() => setViewMode("grid")}
                 className={`p-2 rounded-lg transition-colors ${viewMode === "grid"
-                    ? "bg-gray-100 dark:bg-gray-800 text-purple-500"
-                    : "text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                  ? "bg-gray-100 dark:bg-gray-800 text-purple-500"
+                  : "text-gray-400 hover:text-gray-900 dark:hover:text-white"
                   }`}
               >
                 <Grid size={20} />
@@ -148,8 +167,8 @@ function FeedTest() {
               <button
                 onClick={() => setViewMode("list")}
                 className={`p-2 rounded-lg transition-colors ${viewMode === "list"
-                    ? "bg-gray-100 dark:bg-gray-800 text-purple-500"
-                    : "text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                  ? "bg-gray-100 dark:bg-gray-800 text-purple-500"
+                  : "text-gray-400 hover:text-gray-900 dark:hover:text-white"
                   }`}
               >
                 <List size={20} />
@@ -161,8 +180,8 @@ function FeedTest() {
             <button
               onClick={() => setSelectedType(null)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${!selectedType
-                  ? "bg-purple-500 text-white"
-                  : "text-gray-400 hover:text-white"
+                ? "bg-purple-500 text-white"
+                : "text-gray-400 hover:text-white"
                 }`}
             >
               Tout
@@ -170,8 +189,8 @@ function FeedTest() {
             <button
               onClick={() => setSelectedType("javascript")}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedType === "javascript"
-                  ? "bg-purple-500 text-white"
-                  : "text-gray-400 hover:text-white"
+                ? "bg-purple-500 text-white"
+                : "text-gray-400 hover:text-white"
                 }`}
             >
               Javascript
@@ -179,8 +198,8 @@ function FeedTest() {
             <button
               onClick={() => setSelectedType("machine-learning")}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedType === "machine-learning"
-                  ? "bg-purple-500 text-white"
-                  : "text-gray-400 hover:text-white"
+                ? "bg-purple-500 text-white"
+                : "text-gray-400 hover:text-white"
                 }`}
             >
               Machine Learning
@@ -188,8 +207,8 @@ function FeedTest() {
             <button
               onClick={() => setSelectedType("ui-design")}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedType === "ui-design"
-                  ? "bg-purple-500 text-white"
-                  : "text-gray-400 hover:text-white"
+                ? "bg-purple-500 text-white"
+                : "text-gray-400 hover:text-white"
                 }`}
             >
               UI Design
@@ -197,8 +216,8 @@ function FeedTest() {
             <button
               onClick={() => setSelectedType("cyber-security")}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedType === "cyber-security"
-                  ? "bg-purple-500 text-white"
-                  : "text-gray-400 hover:text-white"
+                ? "bg-purple-500 text-white"
+                : "text-gray-400 hover:text-white"
                 }`}
             >
               Cyber Security
@@ -206,8 +225,8 @@ function FeedTest() {
             <button
               onClick={() => setSelectedType("data-science")}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedType === "data-science"
-                  ? "bg-purple-500 text-white"
-                  : "text-gray-400 hover:text-white"
+                ? "bg-purple-500 text-white"
+                : "text-gray-400 hover:text-white"
                 }`}
             >
               Data Science
@@ -215,8 +234,8 @@ function FeedTest() {
             <button
               onClick={() => setSelectedType("created-posts")}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedType === "data-science"
-                  ? "bg-purple-500 text-white"
-                  : "text-gray-400 hover:text-white"
+                ? "bg-purple-500 text-white"
+                : "text-gray-400 hover:text-white"
                 }`}
             >
               Posts créés
@@ -230,14 +249,14 @@ function FeedTest() {
         ) : (
           <div
             className={`grid ${viewMode === "grid"
-                ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                : "grid-cols-1"
+              ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+              : "grid-cols-1"
               } gap-6`}
           >
             {filteredArticles.map((article) => (
               <article
 
-                key={article.id} 
+                key={article.id}
                 className={`bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden transition-transform hover:-translate-y-1 flex flex-col items-center`}
 
               >
@@ -249,12 +268,13 @@ function FeedTest() {
                 >
 
                   <div className="relative w-full flex justify-center">
-
-                    <img
-                      src={article.thumbnail}
-                      alt={article.title}
-                      className="w-full max-w-xs h-48 object-cover object-center rounded-t-lg"
-                    />
+                    {article.thumbnail && (
+                      <img
+                        src={article.thumbnail}
+                        alt={article.title}
+                        className="w-full max-w-xs h-48 object-cover object-center rounded-t-lg"
+                      />
+                    )}
                     <span className="absolute top-2 right-2 px-2 py-1 bg-gray-900/80 rounded-full text-xs font-medium text-white">
                       {article.type}
                     </span>
