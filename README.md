@@ -4,8 +4,8 @@ Hackatombe est un outil collaboratif de veille technologique, permettant à la c
 
 ## Fonctionnalités principales
 
-- **Feed personnalisé** selon vos centres d'intérêt (tags, types de contenus)
-- **Ajout et partage de ressources** (articles, vidéos, podcasts, outils, etc.)
+- **Feed personnalisé** selon vos centres d'intérêt : tags, types de contenus. (Feature pas encore opérationnelle)
+- **Ajout et partage de ressources** (articles)
 - **Recherche et filtres avancés** par thème, format et popularité
 - **Authentification sécurisée** (JWT)
 
@@ -71,10 +71,10 @@ Hackatombe est un outil collaboratif de veille technologique, permettant à la c
 ## Membres du projet
 
 - **Assiah Essomawaki**
-- **Tonze Groovert**
-- **Jovené Kévin**
-- **Marcheschi Thomas**
-- **Dubois Laurent**
+- **Tonze Groovert** https://www.linkedin.com/in/groovert-tonze-024131340/
+- **Jovené Kévin** https://www.linkedin.com/in/jovene-kevin-developpeur-web/
+- **Marcheschi Thomas** 
+- **Dubois Laurent** https://www.linkedin.com/in/laurent-dubois-dev/
 
 ---
 
