@@ -73,7 +73,7 @@ Hackatombe est un outil collaboratif de veille technologique, permettant à la c
 - **Assiah Essomawaki**
 - **Tonze Groovert** https://www.linkedin.com/in/groovert-tonze-024131340/
 - **Jovené Kévin** https://www.linkedin.com/in/jovene-kevin-developpeur-web/
-- **Marcheschi Thomas** 
+- **Marcheschi Thomas** https://www.linkedin.com/in/thomas-marcheschi-347ab3366/
 - **Dubois Laurent** https://www.linkedin.com/in/laurent-dubois-dev/
 
 ---
